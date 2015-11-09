@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style type="text/css">
+      html, body{ height: 100%; margin: 0; padding: 0; }
+      #map { height: 100%;}
+    </style>
+    <script src="https://maps.googleapis.com/maps/api/js"></script>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script>  
+      
+function initMap() {
+  var lawrence = {lat: 38.9717, lng: -95.2353};
+  var map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 4,
+    center: lawrence
+  });
+var chicago = {metro:'Chicago-Naperville-Elgin', pop:9461105, popString:'9,461,105', lat:41.87811 ,lng:-87.62980};
+var dallas = {metro:'Dallas-Fort Worth-Arlington', pop:6426214, popString:'6,426,214', lat:32.78014 ,lng:-96.80045};
+var houston = {metro:'Houston-TheWoodlands-SurgarLand', pop:5920416, popString:'5,920,416', lat:29.76019 ,lng:-95.36939};
+var la = {metro:'Los Angeles-Long Beach-Anaheim', pop:12828837, popString:'12,828,837', lat:34.05223, lng:-118.24368};
+var ny = {metro:'New York-Newark-Jersey City', pop:19567410, popString:'19,567,410', lat:40.71278 ,lng:-74.00594};
+var philly = {metro:'Philadelphia-Camden-Wilmington', pop:5965343, popString:'5,965,343', lat:39.95233 ,lng:-75.16379};
+var dc ={metro:'Washington-Arlington-Alexandria', pop:5636232, popString:'5,636,232', lat:38.90719 ,lng:-77.03687};     
+var cities = [chicago, dallas, houston, la, ny, philly, dc] 
+
+//chicago
+var infowindowC = new google.maps.InfoWindow({
+  content: chicago.popString
+  });
+var markerC = new google.maps.Marker({
+    position: {lat:chicago.lat, lng:chicago.lng},
+    map: map
+  });
+  markerC.addListener('click', function() {
+    infowindowC.open(map, markerC);
+  });
+    
+//dallas
+var infowindowD = new google.maps.InfoWindow({
+  content: dallas.popString
+  });
+var markerD = new google.maps.Marker({
+    position: {lat:dallas.lat, lng:dallas.lng},
+    map: map
+  });
+  markerD.addListener('click', function() {
+    infowindowD.open(map, markerD);
+  });
+    
+//Los Angeles
+var infowindowL = new google.maps.InfoWindow({
+  content: la.popString
+  });
+var markerL = new google.maps.Marker({
+    position: {lat:la.lat, lng:la.lng},
+    map: map
+  });
+  markerL.addListener('click', function() {
+    infowindowL.open(map, markerL);
+  });
+    
+//New York
+var infowindowN = new google.maps.InfoWindow({
+  content: ny.popString
+  });
+var markerN = new google.maps.Marker({
+    position: {lat:ny.lat, lng:ny.lng},
+    map: map
+  });
+  markerN.addListener('click', function() {
+    infowindowN.open(map, markerN);
+  });
+
+//Philadelphia
+var infowindowP = new google.maps.InfoWindow({
+  content: philly.popString
+  });
+var markerP = new google.maps.Marker({
+    position: {lat:philly.lat, lng:philly.lng},
+    map: map
+  });
+  markerP.addListener('click', function() {
+    infowindowP.open(map, markerP);
+  });
+
+//Washington DC
+var infowindowW = new google.maps.InfoWindow({
+  content: dc.popString
+  });
+var markerW = new google.maps.Marker({
+    position: {lat:dc.lat, lng:dc.lng},
+    map: map
+  });
+  markerW.addListener('click', function() {
+    infowindowW.open(map, markerW);
+  });
+
+}
+    </script>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB01s4QpaNWTtFqJ-cOaNngnyzjzLOtNbM&signed_in=true&callback=initMap"></script>
+  </body>
+</html>
