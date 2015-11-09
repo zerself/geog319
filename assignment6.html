@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>DMS to DD</title>
+</head>
+<body>
+	<h3>This application converts degrees, minutes, and seconds to decimal degress and vice versa. </h3>
+	<label> Degrees: </label > <input type ="number" id ="degs" /> <br>
+	<label> Minutes: </label > <input type ="number" id ="mins" /> <br> 
+	<label> Seconds: </label > <input type ="number" id ="secs" /> <br><br>
+	<button type="button" id="converttoDD">DMS-->DD</button> 
+    <button type="button" id="converttoDMS">DD-->DMS</button>
+	<br></br>
+    <label> Decimal Degrees: </label> <input type ="number" id="decdegs" /> <br>
+	<script>
+        document.getElementById("converttoDD").onclick = function(){
+			var degs=parseFloat(document.getElementById('degs').value)
+			var mins=parseFloat(document.getElementById('mins').value)
+			var secs=parseFloat(document.getElementById('secs').value)
+			var dd = degs+mins/60+secs/3600
+			alert(degs,mins,secs)
+			document.getElementById('decdegs').value=Number(dd.toFixed(5))
+		}
+    </script>	   
+    <script>
+            document.getElementById("converttoDMS").onclick = function(DD){
+           var decdeg = document.getElementById('decdegs').value 
+           if (decdeg >= 0) {    
+                var degree = Math.floor(decdeg);
+                var firstCalc = (decdeg - degree)*60;
+                var minutes = Math.floor(firstCalc);
+                var seconds = Math.floor((firstCalc % minutes)*60);
+                document.getElementById('degs').value=degree
+								document.getElementById('mins').value=minutes
+								document.getElementById('secs').value=seconds
+            }else{
+                var degree = Math.ceil(decdeg);
+            var firstCalc = (decdeg - degree)*60;
+            var minutes = -(Math.ceil(firstCalc));
+            var seconds = -(Math.ceil((firstCalc % minutes)*60));
+            document.getElementById('degs').value=degree
+						document.getElementById('mins').value=minutes
+						document.getElementById('secs').value=seconds
+}
+}
+    </script>
+</body>
+</html>
