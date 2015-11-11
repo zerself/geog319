@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<title>Show City Population as Circles by Year (1790 - 1990) from geoJSON file</title>
+	   <script src="https://maps.googleapis.com/maps/api/js"></script>
   <head>
     <style type="text/css">
       html, body{ height: 100%; margin: 0; padding: 0; }
@@ -11,19 +12,27 @@
     <body>
 <label> Year: </label> <input type ="number" id ="year" />
 <label> Maximum Radius(m): </label> <input type ="number" id ="maxrad" /> <br>     
-<button>Show Population Circles</button>
+<button onclick="FUNCTION NAME HERE()">Show Population Circles</button> 
     <div id="map"></div>
 	</body>
-//code from the seven cities example file
-//create a map
+
+//create a map with the options to format the circles
 var mapOptions = {
 	zoom: 4,
 	center: new google.maps.LatLng(37.09024, -95.712891),
 	mapTypeId: google.maps.MapTypeId.TERRAIN
 };
 var map = new google.maps.Map(document.getElementById('map'),mapOptions);
+map.data.loadGeoJson ('https://github.com/zerself/geog319/CityPopGJ.geojson');
+
+
+
+
+
+
+
 //basic function to create circle including formating choices
-function CreateACircle(loc, radius){
+/*function CreateACircle(loc, radius){
 	var populationOptions = {
 		strokeColor: '#FF0000',
 		strokeOpacity: 0.8,
@@ -35,10 +44,9 @@ function CreateACircle(loc, radius){
 	};
 	return new google.maps.Circle(populationOptions);
 }
-					
-//Get city data from geoJSON file and add city circles to the map - THIS IS OLD CODE USING JQUERY
-	var cityCircles;
-	map.data.loadGeoJson ('https://github.com/zerself/geog319/CityPopGJ.geojson');
+*/					
+//Get city data from geoJSON file and add city circles to the map 
+var cityCircles;
 	function CreateCityCircles(json) {
 		//get the number of cities
 		var n=json.features.length; 			
@@ -96,51 +104,7 @@ var cirRadius=new Array(n);
 for (var i = 0; i <n; i++) {
 	cirRadius[i]=CircleRadius(maxPop,maxRadius,metroPop[i]);
 }
-//build the map	- this is the old code, need to insert code to pull info from geoJSON file and inputs
-	var map;
-	function initMap() {
-		// Create an Array containing the objects of 3 example cities
-		var cities = new Array(7);
-		cities[0] = {
-				name: 'Chicago',
-				center: new google.maps.LatLng(chicago.lat, chicago.lng),
-				population: chicago.pop
-		};
-		cities[1] = {
-			name: 'Dallas',
-			center: new google.maps.LatLng(dallas.lat, dallas.lng),
-			population: dallas.pop
-		};
-		cities[2] = {
-			name: 'Houston',
-			center: new google.maps.LatLng(houston.lat, houston.lng),
-			population: houston.pop
-		};
-        cities[3] = {
-				name: 'Los Angeles',
-				center: new google.maps.LatLng(la.lat, la.lng),
-				population: la.pop
-		};
-		cities[4] = {
-			name: 'New York',
-			center: new google.maps.LatLng(ny.lat, ny.lng),
-			population: ny.pop
-		};
-		cities[5] = {
-			name: 'Philadelphia',
-			center: new google.maps.LatLng(philly.lat, philly.lng),
-			population: philly.pop
-		};
-		cities[6] = {
-				name: 'Washington DC',
-				center: new google.maps.LatLng(dc.lat, dc.lng),
-				population: dc.pop
-		}
-		//create the map to show the cities
-		map = new google.maps.Map(document.getElementById('map'), {
-			center: {lat: 38.955, lng: -95.255}, //Lawrence
-			zoom: 4
-		});
+
 		
 		//show the location and population of the cities as graduated circles
 		for (var i=0; i<cities.length; i++) {
@@ -159,8 +123,5 @@ for (var i = 0; i <n; i++) {
 		}
 	}
 	*/
-	</script>
-	<script async defer
-		src="https://maps.googleapis.com/maps/api/js?callback=initMap">
 	</script>
 </html>
