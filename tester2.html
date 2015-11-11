@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+	<title>Show City Population as Circles</title>
+  <head>
+    <style type="text/css">
+      html, body{ height: 100%; margin: 0; padding: 0; }
+      #map { height: 100%;}
+    </style>
+
+      </head>
+
+    
+    <body>
+<label> Year: </label > <input type ="number" id ="year" />
+<label> Maximum Radius(m): </label > <input type ="number" id ="maxrad" /> <br>     
+<button>Show Population Circles</button>
+    <div id="map"></div>
+	</body>
+	<script type="text/javascript">
+
+//preparatory functions to calculate radius in the map
+function FindMaxValue(data) {
+	var maxValue=data[0];
+	var n=data.length;
+	for (i=1; i<n; i++) {
+		if (data[i]>maxValue) {
+			maxValue=data[i];
+		}
+	}
+	return maxValue;
+}
+
+function CircleRadius(maxValue,maxRadius,value) {
+	//calculate the radius for the value
+	var radius=maxRadius*Math.pow(value/maxValue,0.57);
+	return radius;
+}		
+//data from assignment 5
+var chicago = {metro:'Chicago-Naperville-Elgin', pop:9461105, popString:'9,461,105', lat:41.87811 ,lng:-87.62980};
+var dallas = {metro:'Dallas-Fort Worth-Arlington', pop:6426214, popString:'6,426,214', lat:32.78014 ,lng:-96.80045};
+var houston = {metro:'Houston-TheWoodlands-SurgarLand', pop:5920416, popString:'5,920,416', lat:29.76019 ,lng:-95.36939};
+var la = {metro:'Los Angeles-Long Beach-Anaheim', pop:12828837, popString:'12,828,837', lat:34.05223, lng:-118.24368};
+var ny = {metro:'New York-Newark-Jersey City', pop:19567410, popString:'19,567,410', lat:40.71278 ,lng:-74.00594};
+var philly = {metro:'Philadelphia-Camden-Wilmington', pop:5965343, popString:'5,965,343', lat:39.95233 ,lng:-75.16379};
+var dc ={metro:'Washington-Arlington-Alexandria', pop:5636232, popString:'5,636,232', lat:38.90719 ,lng:-77.03687}; 
+var metroPop = [chicago.pop, dallas.pop, houston.pop, la.pop, ny.pop, philly.pop, dc.pop];
+//for assignment 8 using 100,000 m for max so substituted the number for all the selection code
+var maxRadius=100000
+
+//find max population by calling the first prep function
+var maxPop=FindMaxValue(metroPop);
+
+//Calculate the radii for all the metro areas by calling the second prep function in a for loop
+var n = metroPop.length
+var cirRadius=new Array(n);
+for (var i = 0; i <n; i++) {
+	cirRadius[i]=CircleRadius(maxPop,maxRadius,metroPop[i]);
+}
+//build the map	
+	var map;
+	function initMap() {
+		// Create an Array containing the objects of 3 example cities
+		var cities = new Array(7);
+		cities[0] = {
+				name: 'Chicago',
+				center: new google.maps.LatLng(chicago.lat, chicago.lng),
+				population: chicago.pop
+		};
+		cities[1] = {
+			name: 'Dallas',
+			center: new google.maps.LatLng(dallas.lat, dallas.lng),
+			population: dallas.pop
+		};
+		cities[2] = {
+			name: 'Houston',
+			center: new google.maps.LatLng(houston.lat, houston.lng),
+			population: houston.pop
+		};
+        cities[3] = {
+				name: 'Los Angeles',
+				center: new google.maps.LatLng(la.lat, la.lng),
+				population: la.pop
+		};
+		cities[4] = {
+			name: 'New York',
+			center: new google.maps.LatLng(ny.lat, ny.lng),
+			population: ny.pop
+		};
+		cities[5] = {
+			name: 'Philadelphia',
+			center: new google.maps.LatLng(philly.lat, philly.lng),
+			population: philly.pop
+		};
+		cities[6] = {
+				name: 'Washington DC',
+				center: new google.maps.LatLng(dc.lat, dc.lng),
+				population: dc.pop
+		}
+		//create the map to show the cities
+		map = new google.maps.Map(document.getElementById('map'), {
+			center: {lat: 38.955, lng: -95.255}, //Lawrence
+			zoom: 4
+		});
+		
+		//show the location and population of the cities as graduated circles
+		for (var i=0; i<cities.length; i++) {
+			// Construct the circle for each value in citymap. We scale population by 20.
+			var popCircleOptions = {
+				strokeColor: '#FF0000',
+				strokeOpacity: 0.8,
+				strokeWeight: 2,
+				fillColor: '#FF0000',
+				fillOpacity: 0.35,
+				map: map,
+				center: cities[i].center,
+				radius: cirRadius[i]
+			};
+			var cityCircle = new google.maps.Circle(popCircleOptions);
+		}
+	}
+	</script>
+	<script async defer
+		src="https://maps.googleapis.com/maps/api/js?callback=initMap">
+	</script>
+</html>
