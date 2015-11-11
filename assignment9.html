@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-	<title>Show City Population as Circles</title>
+	<title>Show City Population as Circles by Year (1790 - 1990) from geoJSON file</title>
   <head>
     <style type="text/css">
       html, body{ height: 100%; margin: 0; padding: 0; }
@@ -9,16 +9,16 @@
 
       </head>
 
-    
+  <script type="text/javascript">  
     <body>
 <label> Year: </label > <input type ="number" id ="year" />
 <label> Maximum Radius(m): </label > <input type ="number" id ="maxrad" /> <br>     
 <button>Show Population Circles</button>
     <div id="map"></div>
 	</body>
-	<script type="text/javascript">
+	
 
-//preparatory functions to calculate radius in the map
+//old preparatory functions to calculate radius in the map
 function FindMaxValue(data) {
 	var maxValue=data[0];
 	var n=data.length;
@@ -29,23 +29,14 @@ function FindMaxValue(data) {
 	}
 	return maxValue;
 }
-
 function CircleRadius(maxValue,maxRadius,value) {
 	//calculate the radius for the value
 	var radius=maxRadius*Math.pow(value/maxValue,0.57);
 	return radius;
 }		
-//data from assignment 5
-var chicago = {metro:'Chicago-Naperville-Elgin', pop:9461105, popString:'9,461,105', lat:41.87811 ,lng:-87.62980};
-var dallas = {metro:'Dallas-Fort Worth-Arlington', pop:6426214, popString:'6,426,214', lat:32.78014 ,lng:-96.80045};
-var houston = {metro:'Houston-TheWoodlands-SurgarLand', pop:5920416, popString:'5,920,416', lat:29.76019 ,lng:-95.36939};
-var la = {metro:'Los Angeles-Long Beach-Anaheim', pop:12828837, popString:'12,828,837', lat:34.05223, lng:-118.24368};
-var ny = {metro:'New York-Newark-Jersey City', pop:19567410, popString:'19,567,410', lat:40.71278 ,lng:-74.00594};
-var philly = {metro:'Philadelphia-Camden-Wilmington', pop:5965343, popString:'5,965,343', lat:39.95233 ,lng:-75.16379};
-var dc ={metro:'Washington-Arlington-Alexandria', pop:5636232, popString:'5,636,232', lat:38.90719 ,lng:-77.03687}; 
-var metroPop = [chicago.pop, dallas.pop, houston.pop, la.pop, ny.pop, philly.pop, dc.pop];
-//for assignment 8 using 100,000 m for max so substituted the number for all the selection code
-var maxRadius=100000
+
+//for assignment 9 this value will come from the user input above, need to add will always test with 150000
+var maxRadius=
 
 //find max population by calling the first prep function
 var maxPop=FindMaxValue(metroPop);
@@ -56,7 +47,7 @@ var cirRadius=new Array(n);
 for (var i = 0; i <n; i++) {
 	cirRadius[i]=CircleRadius(maxPop,maxRadius,metroPop[i]);
 }
-//build the map	
+//build the map	- this is the old code, need to insert code to pull info from geoJSON file and inputs
 	var map;
 	function initMap() {
 		// Create an Array containing the objects of 3 example cities
@@ -104,7 +95,7 @@ for (var i = 0; i <n; i++) {
 		
 		//show the location and population of the cities as graduated circles
 		for (var i=0; i<cities.length; i++) {
-			// Construct the circle for each value in citymap. We scale population by 20.
+			// Construct the circle for each value in citymap.
 			var popCircleOptions = {
 				strokeColor: '#FF0000',
 				strokeOpacity: 0.8,
