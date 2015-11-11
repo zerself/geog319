@@ -6,17 +6,67 @@
       html, body{ height: 100%; margin: 0; padding: 0; }
       #map { height: 100%;}
     </style>
-
       </head>
-
-  <script type="text/javascript">  
+ <script type="text/javascript">  
     <body>
-<label> Year: </label > <input type ="number" id ="year" />
-<label> Maximum Radius(m): </label > <input type ="number" id ="maxrad" /> <br>     
+<label> Year: </label> <input type ="number" id ="year" />
+<label> Maximum Radius(m): </label> <input type ="number" id ="maxrad" /> <br>     
 <button>Show Population Circles</button>
     <div id="map"></div>
 	</body>
+//code from the seven cities example file
+//create a map
+var mapOptions = {
+	zoom: 4,
+	center: new google.maps.LatLng(37.09024, -95.712891),
+	mapTypeId: google.maps.MapTypeId.TERRAIN
+};
+var map = new google.maps.Map(document.getElementById('map_canvas'),mapOptions);
+//basic function to create circle including formating choices
+function CreateACircle(loc, radius){
+	var populationOptions = {
+		strokeColor: '#FF0000',
+		strokeOpacity: 0.8,
+		strokeWeight: 2,
+		fillColor: '#FF0000',
+		fillOpacity: 0.35,
+		center: loc,
+		radius: radius
+	};
+	return new google.maps.Circle(populationOptions);
+}
+					
+//Get city data from geoJSON file and add city circles to the map - THIS IS OLD CODE USING JQUERY
+	var cityCircles;
+	$.getJSON("SevenCities.json",function(json){CreateCityCircles(json);});
+						
+	function CreateCityCircles(json) {
+		//get the number of cities
+		var n=json.Cities.length; 			
+		var radius=100000; //change this to pull from input above using id maxrad
+				
+		//create circles for each city - need to factor in year selection using id year
+		cityCircles=new Array(n);
+		for (var i = 0; i <n; i++) {
+		cityLoc=new google.maps.LatLng(json.Cities[i].lat,json.Cities[i].lon);
+		cityCircles[i]=CreateACircle(cityLoc,radius);
+		}
+	}
 	
+	/* HIDE AND SHOW FUNCTIONS AND OLD FUNCTIONS FROM ASSIGNMENT 8 - DELETE ONCE DETERMINED UNNECESSARY		
+			function ShowCircles() {
+				var n=cityCircles.length;
+				for (var i = 0; i <n; i++) {
+					cityCircles[i].setMap(map);
+				}
+			}
+			
+			function HideCircles() {
+				var n=cityCircles.length;
+				for (var i = 0; i <n; i++) {
+					cityCircles[i].setMap(null);
+				}
+			}
 
 //old preparatory functions to calculate radius in the map
 function FindMaxValue(data) {
@@ -109,6 +159,7 @@ for (var i = 0; i <n; i++) {
 			var cityCircle = new google.maps.Circle(popCircleOptions);
 		}
 	}
+	*/
 	</script>
 	<script async defer
 		src="https://maps.googleapis.com/maps/api/js?callback=initMap">
