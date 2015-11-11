@@ -21,7 +21,7 @@ var mapOptions = {
 	center: new google.maps.LatLng(37.09024, -95.712891),
 	mapTypeId: google.maps.MapTypeId.TERRAIN
 };
-var map = new google.maps.Map(document.getElementById('map_canvas'),mapOptions);
+var map = new google.maps.Map(document.getElementById('map'),mapOptions);
 //basic function to create circle including formating choices
 function CreateACircle(loc, radius){
 	var populationOptions = {
@@ -38,17 +38,16 @@ function CreateACircle(loc, radius){
 					
 //Get city data from geoJSON file and add city circles to the map - THIS IS OLD CODE USING JQUERY
 	var cityCircles;
-	$.getJSON("SevenCities.json",function(json){CreateCityCircles(json);});
-						
+	map.data.loadGeoJson ('https://github.com/zerself/geog319/CityPopGJ.geojson');
 	function CreateCityCircles(json) {
 		//get the number of cities
-		var n=json.Cities.length; 			
-		var radius=100000; //change this to pull from input above using id maxrad
+		var n=json.features.length; 			
+		var radius= //use document.getElementByID('maxrad') to get radius, but need to insert computations
 				
 		//create circles for each city - need to factor in year selection using id year
 		cityCircles=new Array(n);
 		for (var i = 0; i <n; i++) {
-		cityLoc=new google.maps.LatLng(json.Cities[i].lat,json.Cities[i].lon);
+		cityLoc=new google.maps.LatLng(json.feature[i].lat,json.feature[i].lon);
 		cityCircles[i]=CreateACircle(cityLoc,radius);
 		}
 	}
