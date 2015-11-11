@@ -7,16 +7,16 @@
       html, body{ height: 100%; margin: 0; padding: 0; }
       #map { height: 100%;}
     </style>
-      </head>
- <script type="text/javascript">  
- 
+  </head>
+
+ <script type="text/javascript"> 
+<body> 
 <label> Year: </label> <input type ="number" id ="year" />
 <label> Maximum Radius(m): </label> <input type ="number" id ="maxrad" /> <br>     
-<button onclick="FUNCTION NAME HERE()">Show Population Circles</button> 
+<button>Show Population Circles</button> 
     <div id="map"></div>
-	</body>
-<body>
-/create a map with the options to format the circles
+<script>
+//create a map with the options to format the circles
 var mapOptions = {
 	zoom: 4,
 	center: new google.maps.LatLng(37.09024, -95.712891),
@@ -44,7 +44,7 @@ map.data.loadGeoJson ('https://github.com/zerself/geog319/CityPopGJ.geojson');
 	};
 	return new google.maps.Circle(populationOptions);
 }
-*/					
+					
 //Get city data from geoJSON file and add city circles to the map 
 var cityCircles;
 	function CreateCityCircles(json) {
