@@ -13,16 +13,16 @@
 
       function initialize() {
         map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 2,
-          center: new google.maps.LatLng(2.8,-187.3),
+          zoom: 4, //CONUS
+          center: new google.maps.LatLng(37.09024, -95.712891), //Lawrence, KS
           mapTypeId: google.maps.MapTypeId.TERRAIN
         });
 
-        // Create a <script> tag and set the USGS URL as the source.
+        // Create a <script> tag and set the URL as the source.
         var script = document.createElement('script');
-        // (In this example we use a locally stored copy instead.)
-        script.src = 'http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_week.geojsonp';
-        //script.src = 'earthquake_GeoJSONP.js';
+        
+        script.src = 'zerself.github.io/geog319/CityPopGJ.geojson';
+        
         document.getElementsByTagName('head')[0].appendChild(script);
       }
 
