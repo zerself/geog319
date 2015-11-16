@@ -24,8 +24,7 @@ var mapOptions = {
 	mapTypeId: google.maps.MapTypeId.TERRAIN
 };
 var map = new google.maps.Map(document.getElementById('map'),mapOptions);
-var gjdata = JSON.parse('https://gist.github.com/4ddf710f307a6e091cd0.git');
-    map.data.loadGeoJson (gjdata);
+map.data.loadGeoJson ('https://gist.github.com/4ddf710f307a6e091cd0.git');
 
 	</script>
 	</body>
