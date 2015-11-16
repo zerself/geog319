@@ -8,8 +8,9 @@
       #map { height: 100%;}
     </style>
   </head>
-<body>
- <script type="text/javascript"> 
+<body> 
+
+    <script type="text/javascript"> </script>
 
 <label> Year: </label> <input type ="number" id ="year" />
 <label> Maximum Radius(m): </label> <input type ="number" id ="maxrad" /> <br>     
@@ -18,12 +19,13 @@
 <script>
 //create a map with the options to format the circles
 var mapOptions = {
-	zoom: 4,
-	center: new google.maps.LatLng(37.09024, -95.712891),
+	zoom: 4, //show CONUS
+	center: new google.maps.LatLng(37.09024, -95.712891), //Lawrence
 	mapTypeId: google.maps.MapTypeId.TERRAIN
 };
 var map = new google.maps.Map(document.getElementById('map'),mapOptions);
-map.data.loadGeoJson ('https://gist.github.com/4ddf710f307a6e091cd0.git');
+var gjdata = JSON.parse('https://gist.github.com/4ddf710f307a6e091cd0.git');
+    map.data.loadGeoJson (gjdata);
 
 
 
